@@ -1,6 +1,7 @@
 package com.biz.user;
 
 public class UserVO {
+	//property
 	private String id="";
 	private String pw="";
 	private String name="";

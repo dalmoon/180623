@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<%=session.getAttribute("SESS_ID") %> ´Ô  È¯¿µÇÕ´Ï´Ù.<br>
+<%=session.getAttribute("SESS_NAME") %> ´Ô  È¯¿µÇÕ´Ï´Ù.<br>
 <a href="logout.do">[·Î±×¾Æ¿ô]</a>
  <hr>
 
