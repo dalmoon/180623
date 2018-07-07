@@ -2,11 +2,17 @@ package com.biz.user;
 
 public class UserVO {
 	//property
+	private int seq;
 	private String id="";
 	private String pw="";
 	private String name="";
 	
-	
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
 	public String getPw() {
 		return pw;
 	}
