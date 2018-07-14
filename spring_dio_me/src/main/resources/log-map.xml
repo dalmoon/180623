@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biz.mapper.LogMap">
+	<!-- <resultMap id="userMap" type="com.biz.user.UserVO">
+		<id property="seq" column="seq" />
+		<result property="id" column="id" />
+		<result property="pw" column="pw" />
+		<result property="name" column="name" />
+	</resultMap>
+	 -->
+	 <!--ArrayList<vo> list = conn.selectList("nm.select", vo)  -->
+	<select id="select" parameterType="com.biz.log.LoginfoVO"
+	resultType="com.biz.log.LoginfoVO">
+		select lseq, id, regdate
+		from loginfo
+		<where>
+			<if test="searchgubun == 'id'">     
+				 id like '%'||#{searchstr}||'%'   
+			</if> 
+			<if test="searchgubun == 'regdate'">     
+				 and regdate between 
+				 to_date(#{searchstr}||'000000','YYYYMMDDHH24MISS')
+				 and    
+				 to_date(#{searchstr}||'235959','YYYYMMDDHH24MISS')
+			</if>
+		</where>
+	</select>
+	<!-- String id = "kim"
+	int rows = conn.insert("nm.insert", id)
+	syso(rows+건 입력) -->
+	<insert id="insert" parameterType="String">
+		insert into loginfo
+		values(loginfo_seq.nextval, #{id}, sysdate)
+	</insert>
+	
+	
+</mapper>	
