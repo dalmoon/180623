@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  <mapper namespace="userNameSpace"> -->
+<mapper namespace="com.biz.mapper.LogMap">
+	<select id="select" parameterType="com.biz.log.LoginfoVO" resultType="com.biz.log.LoginfoVO">
+		select * from loginfo
+		<where>
+			<if test="searchGubun == 'id' ">
+				id like '%' || #{searchStr} || '%'
+			</if>
+			<if test="searchGubun == 'regdate'">
+				and regdate between
+				 to_date(#{regdate}||'000000', 'YYYYMMDDHH24MISS')
+				 and to_date(#{regdate}||'235959', 'YYYYMMDDHH24MISS')
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="string">
+		insert into loginfo
+		values(loginfo_seq.nextval, #{id}, sysdate)
+	</insert>
+	
+</mapper>	
