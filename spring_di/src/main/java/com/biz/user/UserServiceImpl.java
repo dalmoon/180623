@@ -12,20 +12,20 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserMap userMap;
-//	public UserServiceImpl(UserDAO dao) {
-//		this.userDAO = dao;	
+	
+//	
+//	public UserServiceImpl(UserDAO a) {
+//		 this.userDAO = a;
+//	}
+//	public void setUserDAOFunc(UserDAO u) {
+//		this.userDAO  = u;
 //	}
 	
-//	public void setUserDAOFunc(UserDAO dao){
-//		this.userDAO = dao;
-//	}
-	private void myPrint(){
-		
-	}
 	
 	public UserVO getUser(UserVO vo){
-		//UserDAO userDAO = new UserDAO();	
+		//UserDAO userDAO = new UserDAO();
 		System.out.println("UserServiceImpl call.....");
+		//return userDAO.getUser(vo);
 		return userMap.getUser(vo);
 	}
 }

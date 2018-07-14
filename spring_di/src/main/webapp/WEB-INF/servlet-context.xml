@@ -1,111 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.springframework.org/schema/beans"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
-	<context:component-scan base-package="com.test.url" />
+
 	<context:component-scan base-package="com.biz.user" />
-	
-	<context:property-placeholder location="classpath:oracle.properties"/>
-	
+	<context:component-scan base-package="com.biz.board" />
+
+	<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/> 
+		<context:component-scan base-package="com.test.url" /> <context:component-scan 
+		base-package="com.biz.user" /> -->
+
+	<context:property-placeholder location="classpath:oracle.properties" />
+
 	<!-- DBCP -->
-	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${driverClass}"/>
-		<property name="url" value="${url}"/>
-		<property name="username" value="${userid}"/>
-		<property name="password" value="${userpw}"/>
+	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${driverClass}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${userid}" />
+		<property name="password" value="${userpw}" />
 	</bean>
-	
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
-		<property name="dataSource" ref="myDataSource"/> 
-		<!-- <property name="configLocation" value="classpath:config-mybatis.xml"/>  -->
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<!-- <property name="configLocation" value="classpath:config-mybatis.xml"/> -->
 		<property name="mapperLocations" value="classpath:*-map.xml" />
 	</bean>
-	
-	<!-- <bean class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="myDataSource"></property>
-	</bean> -->
+	<!-- <bean class="org.springframework.jdbc.core.JdbcTemplate"> <property 
+		name="dataSource" ref="myDataSource"></property> </bean> -->
 
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"> 
-	<constructor-arg ref="sqlSessionFactory"/> 
-	</bean> 
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
 	
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.biz.mapper" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<mvc:resources mapping="/resources/**" location="/resources/" />
-	
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
-	
-	
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="myDataSource" />
 	</bean>
 
-	<!--  <tx:annotation-driven transaction-manager="txManager"/>-->
+	<!-- <tx:annotation-driven transaction-manager="txManager" /> -->
 	<!-- <tx:advice id="myAdvice" transaction-manager="txManager">
 		<tx:attributes>
-			<tx:method name="*" rollback-for="Exception"/>
+			<tx:method name="*" rollback-for="Exception" />
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
-		<aop:pointcut id="myCut" expression="execution(* com.biz.user.*.*(..))"/>
+		<aop:pointcut id="myCut" expression="execution(* com.biz.user.*.*(..))" />
 		<aop:advisor advice-ref="myAdvice" pointcut-ref="myCut" />
-	</aop:config> -->
-	
-	<aop:aspectj-autoproxy>
-	</aop:aspectj-autoproxy>
-	<!-- aop 
-	<bean name="logAspect" class="com.biz.common.LogAspect"></bean>
-	
-	<aop:config>
-		<aop:aspect id="cfgAspect" ref="logAspect">
-			<aop:pointcut expression="execution(* com.biz..*Impl.*(..))" id="implCut"/>
-			<aop:before pointcut-ref="implCut" method="prevCehck"/>
-		</aop:aspect>
-	</aop:config>
-	-->
-	<!-- error * com.biz..*Controller.*(..) -->
-	<!--  <bean name="/logout.do" class="com.biz.user.LoginController"/>
-	
-	<bean name="/login.do" class="com.biz.user.LoginController">
-		 <constructor-arg>
-			<ref bean="userServiceImpl"></ref>
-		</constructor-arg> 
-		<property name="userServiceFunc">
-			<ref bean="userServiceImpl_bname"></ref>
-		</property>
+	</aop:config>  -->
+
+
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory <property name="prefix" value="/WEB-INF/views/" 
+		/> -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".jsp" />
 	</bean>
-		
-	<bean name="userServiceImpl_bname" class="com.biz.user.UserServiceImpl">
-		 <constructor-arg>
-			<ref bean="userDAO"></ref>
-		</constructor-arg> 
-		<property name="userDAOFunc">
-			<ref bean="userDAO_bname"></ref>
-		</property>
-	</bean>
-	
-	<bean name="userDAO_bname" class="com.biz.user.UserDAO">
-	</bean>-->
-	
+
+
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<bean class="com.biz.user.LogAspect"></bean>
+	<!-- aop <aop:aspectj-autoproxy /> <aop:config> <aop:aspect id="cfgAspect" 
+		ref="logAspect"> <aop:pointcut expression="execution(* com.biz..*Impl.*(..))" 
+		id="implCut"/> <aop:before pointcut-ref="implCut" method="prevCehck"/> </aop:aspect> 
+		</aop:config> -->
+	<!--error * com.biz..*Controller.*(..) -->
+
+
+	<!-- BeanNameUrlHandlerMapping <bean id="beanNameUrlMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" 
+		/> <bean name="/logout.do" class="com.biz.user.LoginController"> </bean> 
+		<bean name="/login.do" class="com.biz.user.LoginController"> <constructor-arg> 
+		<ref bean="userServiceImpl"></ref> </constructor-arg> <property name="userServiceFunc"> 
+		<ref bean="userServiceImpl_bname"></ref> </property> </bean> <bean name="userServiceImpl_bname" 
+		class="com.biz.user.UserServiceImpl"> <constructor-arg> <ref bean="userDAO"></ref> 
+		</constructor-arg> <property name="userDAOFunc"> <ref bean="userDAO_bname"></ref> 
+		</property> </bean> <bean name="userDAO_bname" class="com.biz.user.UserDAO"> 
+		<constructor-arg> <ref bean="myDataSource"></ref> </constructor-arg> </bean> -->
+
 </beans>

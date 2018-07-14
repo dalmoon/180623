@@ -8,9 +8,9 @@
 </head>
 <body>
 <form action="/login.do" method="post">
-아이디 : <input type="text" name="id"><br>
-비번 : <input type="text" name="pw"><br>
+아이디 : <input type="text" name="id" value="lkh"><br>
+비번 : <input type="text" name="pw" value="111"><br>
 <input type="submit" name="전송">
-</form>
+</form> 
 </body>
 </html>

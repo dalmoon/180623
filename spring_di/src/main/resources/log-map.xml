@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  <mapper namespace="userNameSpace"> -->
+<mapper namespace="com.biz.mapper.LogMap">
+	<!-- <resultMap id="userMap" type="com.biz.user.UserVO">
+		<id property="seq" column="seq" />
+		<result property="id" column="id" />
+		<result property="pw" column="pw" />
+		<result property="name" column="name" />
+	</resultMap> -->
+	public void insert(String id);
+
+	public ArrayList<LoginfoVO> select(LoginfoVO loginfoVO);
+	<select id="select" parameterType="com.biz.log.LoginfoVO" resultType="com.biz.log.LoginfoVO">
+	select lseq, id, regdate 
+	from loginfo
+	<where>
+	<if test="id != null">
+		id like '%'||#{id}||'%'
+	</if>
+	<if test="regdate != null">
+		and regdate = to_date(#{regdate}, 'YYYYMMDD')
+	</if>
+	</where>
+	</select>
+	
+	<insert id="insert" parameterType="String">
+	insert into loginfo
+    values(loginfo_seq.nextval, #{id}, sysdate);
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+ 	<!-- <sql id="commonSelect">seq, id, pw, name</sql>
+ 	
+ 	<select id="getUser" parameterType="com.biz.user.UserVO"
+ 						resultType="com.biz.user.UserVO">
+ 		select name 
+ 		from mvcuser 
+ 		where id=#{id} and pw=#{pw}
+ 	</select>
+	
+	<select id="allUser" resultType="com.biz.user.UserVO">
+		select  seq, id, pw, name
+		from mvcuser
+	</select>
+	<insert id="insertUser" parameterType="com.biz.user.UserVO">
+		insert into mvcuser
+		values(mvcuser_seq.nextval, #{id},#{pw},#{name})
+	</insert>  -->
+	
+</mapper>	

@@ -12,23 +12,17 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-
+//
 //@Repository
 //public class UserDAO {
-//
 //	@Autowired
 //	SqlSession conn;
-//
+//	
 //	public UserVO getUser(UserVO userVO) {
 //		System.out.println("UserDAO call......");
-//		// DBManager db = new DBManager();
-//		// try {
+//		//try {
 //		return conn.selectOne("userNameSpace.getUser", userVO);
-//		// } catch (Exception e) {
-//		// e.printStackTrace();
-//		// } finally {
-//		// // conn.close(rs, pstmt, conn);
-//		// }
-//		// return userVO;
+//		//}catch(Exception e) {e.printStackTrace();} 
+//		//return userVO;
 //	}
 //}

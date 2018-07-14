@@ -10,13 +10,14 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-
+//
 //@Repository
 //public class UserDAO2 {
 //	@Autowired
 //	DataSource dataSource;
-//	//	@Resource(name="DBManager")
-//	private Connection conn;	
+//	
+////	@Resource(name="Connection") 
+//	private Connection conn;
 //	private PreparedStatement pstmt;
 //	private ResultSet rs; 
 //	
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Repository;
 //		//DBManager db = new DBManager();
 //		try {
 //			conn = dataSource.getConnection();
+//			
 //			String sql = "select name from mvcuser where id=? and pw=?";
 //			pstmt = conn.prepareStatement(sql);
 //			pstmt.setString(1, vo.getId());

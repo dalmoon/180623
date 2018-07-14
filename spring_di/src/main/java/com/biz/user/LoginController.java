@@ -1,30 +1,36 @@
 package com.biz.user;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-//import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.stereotype.Controller;
 //import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.biz.user.UserService;
 
 @Controller
-public class LoginController {//extends MultiActionController {//implements Controller {
+public class LoginController { //extends MultiActionController { //implements Controller {
 	@Autowired
 	private UserService userService;
 //	public LoginController(UserService svc) {
 //		this.userService = svc;
 //	}
-	
-//	public void setUserServiceFunc(UserService svc){
+//	public void setUserServiceFunc(UserService svc) {
 //		this.userService = svc;
 //	}
-	@RequestMapping(value = "/logout.do")
+	@RequestMapping(value="/logout.do")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("Contrller logout.....");
+		System.out.println("Contrller logout....");
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "login";
@@ -32,10 +38,10 @@ public class LoginController {//extends MultiActionController {//implements Cont
 	
 	@RequestMapping(value = "/login.do")
 	//public String login(HttpServletRequest request) {
-	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) { //throws Exception{
+	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) { //throws Exception {
 		System.out.println("Contrller login....");
 		ModelAndView mav = new ModelAndView();
-
+	
 //		String key = request.getParameter("key");
 //		if(key.equals("login.do")) {
 //		}else if(key.equals("login.do")) {

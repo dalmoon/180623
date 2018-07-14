@@ -9,7 +9,7 @@
 <body>
 
 <%=session.getAttribute("SESS_NAME") %> 님  환영합니다.<br>
-<a href="logout.do">[로그아웃]</a>
+<a href="/logout.do">[로그아웃]</a>
  <hr>
 
 메인 페이지
